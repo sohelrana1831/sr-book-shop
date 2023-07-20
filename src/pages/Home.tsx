@@ -1,15 +1,13 @@
 import { Button } from '@/components/ui/button';
-import banner from '@/assets/images/banner.png';
 import hero from '@/assets/images/hero.png';
-import { Link } from 'react-router-dom';
 import Footer from '@/layouts/Footer';
-import { IProduct } from '@/types/globalTypes';
+import { IBook } from '@/types/globalTypes';
 import { useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
-import ProductCard from '@/components/ProductCard';
+import BookCard from '@/components/BookCard';
 
 export default function Home() {
-  const [data, setData] = useState<IProduct[]>([]);
+  const [data, setData] = useState<IBook[]>([]);
   useEffect(() => {
     fetch('./data.json')
       .then((res) => res.json())
@@ -29,17 +27,17 @@ export default function Home() {
     console.log(value);
   };
 
-  let productsData;
+  // let booksData;
 
-  if (status) {
-    productsData = data.filter(
-      (item) => item.status === true && item.price < priceRange
-    );
-  } else if (priceRange > 0) {
-    productsData = data.filter((item) => item.price < priceRange);
-  } else {
-    productsData = data;
-  }
+  // if (status) {
+  //   booksData = data.filter(
+  //     (item) => item.status === true && item.price < priceRange
+  //   );
+  // } else if (priceRange > 0) {
+  //   booksData = data.filter((item) => item.price < priceRange);
+  // } else {
+  //   booksData = data;
+  // }
 
   return (
     <>
@@ -71,8 +69,8 @@ export default function Home() {
         </h1>
       </div>
       <div className="col-span-9 grid grid-cols-4 gap-10 pb-20 w-full md:max-w-7xl h-full mx-auto ">
-        {productsData?.map((product) => (
-          <ProductCard product={product} />
+        {data?.map((book) => (
+          <BookCard book={book} />
         ))}
       </div>
       <Footer />

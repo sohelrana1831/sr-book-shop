@@ -1,10 +1,13 @@
-import ProductCard from '@/components/ProductCard';
+import BookCard from '@/components/BookCard';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
 import { IProduct } from '@/types/globalTypes';
 import { useEffect, useState } from 'react';
+import { HiOutlineSearch } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
 
 export default function Products() {
   const [data, setData] = useState<IProduct[]>([]);
@@ -26,19 +29,22 @@ export default function Products() {
   const handleSlider = (value: number[]) => {
     console.log(value);
   };
+  // Create a Set to store unique genres
+  const uniqueData = new Set();
 
-  let productsData;
+  // Loop through the data array to extract unique genres
+  data.forEach((book) => uniqueData.add(book.genre));
 
-  if (status) {
-    productsData = data.filter(
-      (item) => item.status === true && item.price < priceRange
-    );
-  } else if (priceRange > 0) {
-    productsData = data.filter((item) => item.price < priceRange);
-  } else {
-    productsData = data;
-  }
+  // Step 1: Extract years from publication_date strings
+  const years = data.map((book) =>
+    new Date(book.publication_date).getFullYear()
+  );
 
+  // Step 2: Use a Set to get unique years
+  const uniqueYearsSet = new Set(years);
+
+  // Step 3: Convert the Set back to an array to get unique years in the same order they appear
+  const uniqueYearsArray = Array.from(uniqueYearsSet);
   return (
     <>
       <div className="text-center my-8">
@@ -48,34 +54,55 @@ export default function Products() {
       </div>
       <div className="grid grid-cols-12 max-w-7xl mx-auto relative ">
         <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16 h-[calc(100vh-80px)]">
-          <div>
-            <h1 className="text-2xl uppercase">Availability</h1>
-            <div className="flex items-center space-x-2 mt-3">
-              <Switch id="in-stock" />
-              <Label htmlFor="in-stock">In stock</Label>
+          <div className="">
+            <div className="">
+              <div className="flex justify-between gap-2 ">
+                <input
+                  type="text"
+                  id="search-field"
+                  className="px-2  py-1 border  border-gray-200/80"
+                  placeholder="Search book"
+                />
+                <Button variant="ghost">
+                  <HiOutlineSearch size="20" />
+                </Button>
+              </div>
             </div>
           </div>
-          <div className="space-y-3 ">
-            <h1 className="text-2xl uppercase">Price Range</h1>
-            <div className="max-w-xl">
-              <Slider
-                defaultValue={[150]}
-                max={150}
-                min={0}
-                step={1}
-                onValueChange={(value) => handleSlider(value)}
-              />
+          <div>
+            <h1 className="text-xl uppercase">Availability Genre</h1>
+            <div className="flex flex-col">
+              {Array.from(uniqueData).map((genre, key) => (
+                <Button key={key} variant="link" asChild>
+                  <Link to={`/${genre}`}>
+                    <Label htmlFor="in-stock">{genre}</Label>
+                  </Link>
+                </Button>
+              ))}
             </div>
-            <div>
-              From 0 <span className="text-2xl">&#2547;</span> To {priceRange}{' '}
-              <span className="text-2xl">&#2547;</span>
+          </div>
+          <div>
+            <h1 className="text-xl my-4 uppercase">Publication Year</h1>
+            <div className="grid grid-cols-4 gap-4 ">
+              {uniqueYearsArray.map((year, key) => (
+                <Button
+                  className="bg-cyan-500 shadow-lg shadow-cyan-500/50 gap-4"
+                  key={key}
+                  variant="link"
+                  asChild
+                >
+                  <Link to={`/${year}`}>
+                    <Label htmlFor="in-stock">{year}</Label>
+                  </Link>
+                </Button>
+              ))}
             </div>
           </div>
         </div>
 
         <div className="col-span-9 grid grid-cols-3 gap-10 pb-20">
-          {productsData?.map((product) => (
-            <ProductCard product={product} />
+          {data?.map((book) => (
+            <BookCard book={book} />
           ))}
         </div>
       </div>

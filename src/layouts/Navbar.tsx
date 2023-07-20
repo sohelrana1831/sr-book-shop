@@ -18,7 +18,11 @@ export default function Navbar() {
       <div className="h-full w-full bg-white/60">
         <div className="flex items-center justify-between w-full md:max-w-7xl h-full mx-auto ">
           <div>
-            <h1 className="text-4xl">SR Book Shop</h1>
+            <Button variant="link" asChild>
+              <Link to="/">
+                <h1 className="text-4xl">SR Book Shop</h1>
+              </Link>
+            </Button>
           </div>
           <div>
             <ul className="flex items-center">

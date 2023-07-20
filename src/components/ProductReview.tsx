@@ -10,9 +10,12 @@ const dummyComments = [
   '200 taka dibo, hobe ??',
 ];
 
-export default function ProductReview() {
+export default function ProductReview({ review }) {
   return (
     <div className="max-w-7xl mx-auto mt-5">
+      <div className="text-center my-8">
+        <h1 className="text-3xl">Review </h1>
+      </div>
       <div className="flex gap-5 items-center">
         <Textarea className="min-h-[30px]" />
         <Button className="rounded-full h-10 w-10 p-2 text-[25px]">
@@ -20,7 +23,7 @@ export default function ProductReview() {
         </Button>
       </div>
       <div className="mt-10">
-        {dummyComments.map((comment, index) => (
+        {review.map((comment: string, index: number) => (
           <div key={index} className="flex gap-3 items-center mb-5">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" />
