@@ -1,24 +1,35 @@
-import React, { useState } from 'react';
+import { loginUser } from '@/redux/features/user/userSlices';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface ILogin {
   email: string;
   password: string;
 }
 const Login = () => {
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ILogin>();
 
-  const onSubmit = async (data: ILogin) => {
-    console.log(data);
+  const { users, isLodging, error } = useAppSelector((state) => state.users);
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const onSubmit = (data: ILogin) => {
+    // console.log(data);
+    dispatch(loginUser({ email: data.email, password: data.password }));
   };
+
+  useEffect(() => {
+    if (users.email && !isLodging) {
+      navigate('/');
+    }
+  }, [users.email, isLodging, navigate]);
 
   return (
     <>

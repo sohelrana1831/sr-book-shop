@@ -4,10 +4,10 @@ import { api } from './api/apiSlices';
 export const store = configureStore({
   reducer: {
     users: usersReducer,
-    [api.reducerPath]: api.reducer,
+    // [api.reducerPath]: api.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+  //   middleware: (getDefaultMiddleware) =>
+  //     getDefaultMiddleware().concat(api.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

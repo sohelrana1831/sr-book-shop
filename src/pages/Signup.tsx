@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useAppDispatch } from '@/redux/hooks';
+import { createUser } from '@/redux/features/user/userSlices';
 interface ISingup {
   email: string;
   password: string;
@@ -13,7 +15,7 @@ export default function Signup() {
     handleSubmit,
     formState: { errors },
   } = useForm<ISingup>();
-
+  const dispatch = useAppDispatch();
   const onSubmit = async (data: ISingup) => {
     console.log(data);
     if (data.reEnterPassword !== data.password) {
@@ -21,6 +23,8 @@ export default function Signup() {
     } else {
       setError('');
     }
+
+    dispatch(createUser({ email: data.email, password: data.password }));
   };
 
   return (
