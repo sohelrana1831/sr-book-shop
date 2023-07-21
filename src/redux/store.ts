@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import usersReducer from './features/user/userSlices';
-import { api } from './api/apiSlices';
+import bookReducer from './features/book/bookSlice';
+import { apiSlice } from './api/apiSlices';
 export const store = configureStore({
   reducer: {
     users: usersReducer,
-    // [api.reducerPath]: api.reducer,
+    books: bookReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
-  //   middleware: (getDefaultMiddleware) =>
-  //     getDefaultMiddleware().concat(api.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

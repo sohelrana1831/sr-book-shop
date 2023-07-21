@@ -3,7 +3,9 @@ export interface IBook {
   author: string;
   title: string;
   genre: string;
-  publication_date: string;
-  image_link: string;
-  reviews: string[];
+  userEmail: string;
+  publicationDate: Date | string;
+  imageLink: string;
+  reviews?: string[];
+  publicationYear?: string;
 }

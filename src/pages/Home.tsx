@@ -5,23 +5,18 @@ import { IBook } from '@/types/globalTypes';
 import { useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import BookCard from '@/components/BookCard';
+import { useGetBooksQuery } from '@/redux/features/book/bookApi';
 
 export default function Home() {
-  const [data, setData] = useState<IBook[]>([]);
-  useEffect(() => {
-    fetch('./data.json')
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  }, []);
-
+  // const [data, setData] = useState<IBook[]>([]);
+  // useEffect(() => {
+  //   fetch('./data.json')
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data));
+  // }, []);
+  const { data, isLoading, isError, error } = useGetBooksQuery(undefined);
+  // console.log(data?.data);
   const { toast } = useToast();
-
-  //! Dummy Data
-
-  const status = true;
-  const priceRange = 100;
-
-  //! **
 
   const handleSlider = (value: number[]) => {
     console.log(value);
@@ -69,9 +64,8 @@ export default function Home() {
         </h1>
       </div>
       <div className="col-span-9 grid grid-cols-4 gap-10 pb-20 w-full md:max-w-7xl h-full mx-auto ">
-        {data?.map((book) => (
-          <BookCard book={book} />
-        ))}
+        {data.data.length &&
+          data.data.map((book: IBook) => <BookCard book={book} />)}
       </div>
       <Footer />
     </>
