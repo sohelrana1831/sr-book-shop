@@ -38,7 +38,7 @@ export default function Navbar() {
               </li>
               <li>
                 <Button variant="link" asChild>
-                  <Link to="/checkout">Checkout</Link>
+                  <Link to="/add-new-book">Add New Book</Link>
                 </Button>
               </li>
               <li>
@@ -46,9 +46,7 @@ export default function Navbar() {
                   <HiOutlineSearch size="25" />
                 </Button>
               </li>
-              <li>
-                <Cart />
-              </li>
+
               <li className="ml-5">
                 <DropdownMenu>
                   <DropdownMenuTrigger className="outline-none">

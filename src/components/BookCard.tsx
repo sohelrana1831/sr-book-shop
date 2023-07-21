@@ -19,7 +19,7 @@ export default function BookCard({ book: book }: IProps) {
         <div>
           <Link to={`/product-details/${book.id}`} className="w-full">
             <img src={book?.image_link} alt="book" />
-            <h1 className="text-xl text-center font-semibold">{book?.title}</h1>
+            <p className="text-lg">{book?.title}</p>
           </Link>
         </div>
         <div className="flex flex-col font-sans text-sm">
