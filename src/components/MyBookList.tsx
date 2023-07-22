@@ -1,19 +1,12 @@
-import { IBook } from '@/types/globalTypes';
-import React, { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { MdDeleteForever } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
+import { useGetBooksQuery } from '@/redux/features/book/bookApi';
+import { IBook } from '@/types/globalTypes';
 
 const MyBookList = () => {
-  const [data, setData] = useState<IBook[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    fetch('./data.json')
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  }, []);
+  const { data, isLoading } = useGetBooksQuery(undefined);
 
   const handleDeleteTour = (id: number | string) => {
     const proceed = window.confirm('Are you sure, You went to delete');
@@ -53,7 +46,7 @@ const MyBookList = () => {
                     </div>
                   ) : (
                     data &&
-                    data.map((book) => (
+                    data?.data?.map((book: IBook) => (
                       <tr key={book.id}>
                         <td className="px-2 py-2">
                           <p className="w-32 overflow-hidden overflow-ellipsis">
@@ -65,7 +58,7 @@ const MyBookList = () => {
                             <img
                               className=" rounded-md"
                               alt="avatar"
-                              src={book.image_link}
+                              src={book.imageLink}
                             />
                           </div>
                         </td>

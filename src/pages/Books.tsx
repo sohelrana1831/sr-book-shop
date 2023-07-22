@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useGetBooksQuery } from '@/redux/features/book/bookApi';
 import { IBook } from '@/types/globalTypes';
-import { ReactNode } from 'react';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 

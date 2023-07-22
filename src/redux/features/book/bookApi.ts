@@ -7,6 +7,10 @@ const bookApi = apiSlice.injectEndpoints({
       query: () => '/book',
       providesTags: ['book'],
     }),
+    getSearchTerm: builder.query({
+      query: (value) => `/book/?searchTerm=${value}`,
+      providesTags: ['book'],
+    }),
     addBook: builder.mutation({
       query: (data) => ({
         url: `/book`,
@@ -57,4 +61,5 @@ export const {
   useEditBookMutation,
   useGetReviewQuery,
   useDeleteBookMutation,
+  useGetSearchTermQuery,
 } = bookApi;
