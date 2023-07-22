@@ -64,6 +64,7 @@ const BookForm = ({ mode }: IMode) => {
   }, [id, mode, setValue, singleBook]);
 
   const onSubmit = (value: BookFormInputs) => {
+    console.log(value);
     const dateObject = new Date(value.publicationDate);
     const year = dateObject.getFullYear();
     const payload = {
@@ -71,7 +72,8 @@ const BookForm = ({ mode }: IMode) => {
       publicationYear: year,
       userEmail: users.email,
     };
-    mode === 'edit' ? editBook({ _id: id, payload }) : addBook(payload);
+    console.log(payload);
+    mode === 'edit' ? editBook({ _id: id, ...payload }) : addBook(payload);
   };
   return (
     <>
