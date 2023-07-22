@@ -11,6 +11,7 @@ import { IBook } from '@/types/globalTypes';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { toast } from './ui/use-toast';
 
 interface BookFormInputs {
   author: string;
@@ -72,8 +73,14 @@ const BookForm = ({ mode }: IMode) => {
       publicationYear: year,
       userEmail: users.email,
     };
-    console.log(payload);
+
     mode === 'edit' ? editBook({ _id: id, ...payload }) : addBook(payload);
+    toast({
+      description:
+        mode === 'edit'
+          ? 'Book edited successfully!'
+          : 'Book added successfully!',
+    });
   };
   return (
     <>

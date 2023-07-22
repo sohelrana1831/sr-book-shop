@@ -2,16 +2,39 @@ import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { MdDeleteForever } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
-import { useGetBooksQuery } from '@/redux/features/book/bookApi';
+import {
+  useDeleteBookMutation,
+  useGetBooksQuery,
+} from '@/redux/features/book/bookApi';
 import { IBook } from '@/types/globalTypes';
+import { useEffect, useState } from 'react';
+import { useAppSelector } from '@/redux/hooks';
+import { toast } from './ui/use-toast';
 
 const MyBookList = () => {
+  const [bookData, setBookData] = useState<IBook[]>([]);
   const { data, isLoading } = useGetBooksQuery(undefined);
+  const { users } = useAppSelector((state) => state.users);
 
-  const handleDeleteTour = (id: number | string) => {
+  useEffect(() => {
+    if (data !== undefined) {
+      const filterData = data?.data?.filter(
+        (item: IBook) => item.userEmail === users?.email
+      );
+      setBookData(filterData);
+    }
+  }, [data, users?.email]);
+
+  const [deleteBook] = useDeleteBookMutation();
+
+  const handleDeleteBook = (id: string) => {
     const proceed = window.confirm('Are you sure, You went to delete');
-    console.log(id);
+    if (proceed) {
+      deleteBook(id);
+      toast({ description: 'Delete Successfully!' });
+    }
   };
+
   return (
     <>
       <div className="max-w-lg w-full">
@@ -45,8 +68,8 @@ const MyBookList = () => {
                       <div className="w-40 h-40 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
                     </div>
                   ) : (
-                    data &&
-                    data?.data?.map((book: IBook) => (
+                    bookData &&
+                    bookData?.map((book: IBook) => (
                       <tr key={book.id}>
                         <td className="px-2 py-2">
                           <p className="w-32 overflow-hidden overflow-ellipsis">
@@ -80,7 +103,7 @@ const MyBookList = () => {
                           </Link>
                           <span className="px-2">|</span>
                           <Button
-                            onClick={() => handleDeleteTour(book?.id)}
+                            onClick={() => handleDeleteBook(book?.id as string)}
                             className="text-red-500 hover:underline px-2 py-0"
                           >
                             {/* <i className="far fa-trash-alt text-2xl"></i> */}

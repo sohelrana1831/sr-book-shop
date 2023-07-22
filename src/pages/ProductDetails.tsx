@@ -1,16 +1,22 @@
 import ProductReview from '@/components/ProductReview';
 import { Button } from '@/components/ui/button';
-import { useGetBooksQuery } from '@/redux/features/book/bookApi';
+import { toast } from '@/components/ui/use-toast';
+import {
+  useDeleteBookMutation,
+  useGetBooksQuery,
+} from '@/redux/features/book/bookApi';
+import { useAppSelector } from '@/redux/hooks';
 import { IBook } from '@/types/globalTypes';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default function ProductDetails() {
   const [singleBook, setSingleBook] = useState<IBook>();
   const { id } = useParams();
 
   const { data } = useGetBooksQuery(undefined);
+  const { users } = useAppSelector((state) => state.users);
 
   useEffect(() => {
     if (data !== undefined) {
@@ -19,6 +25,17 @@ export default function ProductDetails() {
       );
     }
   }, [data, id]);
+
+  const [deleteBook] = useDeleteBookMutation();
+
+  const handleDeleteBook = (id: string) => {
+    const proceed = window.confirm('Are you sure, You went to delete');
+    if (proceed) {
+      deleteBook(id);
+      toast({ description: 'Delete Successfully!' });
+      history.back();
+    }
+  };
 
   return (
     <>
@@ -37,7 +54,23 @@ export default function ProductDetails() {
                 format(new Date(singleBook?.publicationDate), 'yyyy-MM-dd')}
             </div>
           </div>
-          <Button>Download</Button>
+          <div className="flex gap-2">
+            <Button>Download</Button>
+            {singleBook?.userEmail === users.email && (
+              <>
+                <Button variant={'secondary'}>
+                  <Link to={`/edit-book/${singleBook?.id}`}>Edit</Link>
+                </Button>
+                <Button
+                  variant={'secondary'}
+                  className="text-red-600 "
+                  onClick={() => handleDeleteBook(singleBook?.id as string)}
+                >
+                  Delete
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </div>
       {singleBook?.reviews && <ProductReview review={singleBook?.reviews} />}
