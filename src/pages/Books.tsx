@@ -7,7 +7,6 @@ import {
 } from '@/redux/features/book/bookApi';
 import { IBook } from '@/types/globalTypes';
 import { useEffect, useState } from 'react';
-import { HiOutlineSearch } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 
 export default function Books() {

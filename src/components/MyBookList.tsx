@@ -70,14 +70,14 @@ const MyBookList = () => {
                         </td>
 
                         <td className="px-2 py-2 text-center">
-                          <Button className="text-red-500 hover:underline px-2 py-0">
-                            <Link
-                              to={`/update-tour/${book.id}`}
-                              className="text-primary hover:underline"
-                            >
+                          <Link
+                            to={`/edit-book/${book.id}`}
+                            className="text-primary hover:underline"
+                          >
+                            <Button className="text-white hover:underline px-2 py-0">
                               <FiEdit />
-                            </Link>
-                          </Button>
+                            </Button>
+                          </Link>
                           <span className="px-2">|</span>
                           <Button
                             onClick={() => handleDeleteTour(book?.id)}
