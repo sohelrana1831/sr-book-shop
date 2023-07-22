@@ -3,7 +3,7 @@ import App from '@/App';
 import Login from '@/pages/Login';
 import NotFound from '@/pages/NotFound';
 import Home from '@/pages/Home';
-import Products from '@/pages/Products';
+import Books from '@/pages/Books';
 import AddNewBook from '@/pages/AddNewBook';
 import Signup from '@/pages/Signup';
 import ProductDetails from '@/pages/ProductDetails';
@@ -19,7 +19,7 @@ const routes = createBrowserRouter([
       },
       {
         path: '/books',
-        element: <Products />,
+        element: <Books />,
       },
       {
         path: '/product-details/:id',

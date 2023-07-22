@@ -1,41 +1,46 @@
 import ProductReview from '@/components/ProductReview';
 import { Button } from '@/components/ui/button';
+import { useGetBooksQuery } from '@/redux/features/book/bookApi';
 import { IBook } from '@/types/globalTypes';
+import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export default function ProductDetails() {
+  const [singleBook, setSingleBook] = useState<IBook>();
   const { id } = useParams();
 
-  //! Temporary code, should be replaced with redux
-  const [data, setData] = useState<IBook[]>([]);
+  const { data } = useGetBooksQuery(undefined);
+
   useEffect(() => {
-    fetch('../../public/data.json')
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  }, []);
-
-  const book = data?.find((item) => item.id === Number(id));
-
-  //! Temporary code ends here
+    if (data !== undefined) {
+      setSingleBook(
+        data.data.find((item: { id: string | undefined }) => item.id === id)
+      );
+    }
+  }, [data, id]);
 
   return (
     <>
       <div className="flex my-8 max-w-7xl mx-auto items-center">
         <div className="w-[50%]">
-          <img src={book?.image_link} alt="" />
+          <img src={singleBook?.imageLink} alt="" />
         </div>
         <div className="w-[50%] space-y-3">
-          <h1 className="text-3xl font-semibold">{book?.title}</h1>
+          <h1 className="text-3xl font-semibold">{singleBook?.title}</h1>
           <div className="flex flex-col font-sans text-sm">
-            <div>Author: {book?.author}</div>
-            <div>Genre: {book?.genre}</div>
-            <div>Publication: {book?.publication_date}</div>
+            <div>Author: {singleBook?.author}</div>
+            <div>Genre: {singleBook?.genre}</div>
+            <div>
+              Publication:{' '}
+              {singleBook?.publicationDate &&
+                format(new Date(singleBook?.publicationDate), 'yyyy-MM-dd')}
+            </div>
           </div>
           <Button>Download</Button>
         </div>
       </div>
-      {book?.reviews && <ProductReview review={book?.reviews} />}
+      {singleBook?.reviews && <ProductReview review={singleBook?.reviews} />}
     </>
   );
 }

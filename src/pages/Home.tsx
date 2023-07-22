@@ -2,37 +2,11 @@ import { Button } from '@/components/ui/button';
 import hero from '@/assets/images/hero.png';
 import Footer from '@/layouts/Footer';
 import { IBook } from '@/types/globalTypes';
-import { useEffect, useState } from 'react';
-import { useToast } from '@/components/ui/use-toast';
 import BookCard from '@/components/BookCard';
 import { useGetBooksQuery } from '@/redux/features/book/bookApi';
 
 export default function Home() {
-  // const [data, setData] = useState<IBook[]>([]);
-  // useEffect(() => {
-  //   fetch('./data.json')
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data));
-  // }, []);
-  const { data, isLoading, isError, error } = useGetBooksQuery(undefined);
-  // console.log(data?.data);
-  const { toast } = useToast();
-
-  const handleSlider = (value: number[]) => {
-    console.log(value);
-  };
-
-  // let booksData;
-
-  // if (status) {
-  //   booksData = data.filter(
-  //     (item) => item.status === true && item.price < priceRange
-  //   );
-  // } else if (priceRange > 0) {
-  //   booksData = data.filter((item) => item.price < priceRange);
-  // } else {
-  //   booksData = data;
-  // }
+  const { data } = useGetBooksQuery(undefined);
 
   return (
     <>
@@ -64,7 +38,7 @@ export default function Home() {
         </h1>
       </div>
       <div className="col-span-9 grid grid-cols-4 gap-10 pb-20 w-full md:max-w-7xl h-full mx-auto ">
-        {data.data.length &&
+        {data !== undefined &&
           data.data.map((book: IBook) => <BookCard book={book} />)}
       </div>
       <Footer />
