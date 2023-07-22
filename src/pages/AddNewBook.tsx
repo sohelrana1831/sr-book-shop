@@ -2,6 +2,7 @@ import MyBookList from '@/components/MyBookList';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useAppDispatch } from '@/redux/hooks';
 import { useForm } from 'react-hook-form';
 
 interface BookFormInputs {
@@ -19,6 +20,8 @@ export default function AddNewBook() {
     handleSubmit,
     formState: { errors },
   } = useForm<BookFormInputs>();
+
+  const dispatch = useAppDispatch();
 
   const onSubmit = (data: BookFormInputs) => {
     console.log(data);

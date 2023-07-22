@@ -1,12 +1,18 @@
 import BookCard from '@/components/BookCard';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { useGetBooksQuery } from '@/redux/features/book/bookApi';
+import {
+  useGetBooksQuery,
+  useGetSearchTermQuery,
+} from '@/redux/features/book/bookApi';
 import { IBook } from '@/types/globalTypes';
+import { useEffect, useState } from 'react';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 
 export default function Books() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [bookData, setBookData] = useState([]);
   const { data } = useGetBooksQuery(undefined);
 
   // Create a Set to store unique genres
@@ -21,6 +27,14 @@ export default function Books() {
       uniqueYear.add(book.publicationYear);
     });
 
+  const { data: searchData } = useGetSearchTermQuery(searchTerm);
+
+  useEffect(() => {
+    if (searchData?.data?.length) {
+      setBookData(searchData.data);
+    }
+  }, [searchData]);
+
   return (
     <>
       <div className="text-center my-8">
@@ -32,22 +46,20 @@ export default function Books() {
         <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16 h-[calc(100vh-80px)]">
           <div className="">
             <div className="">
-              <div className="flex justify-between gap-2 ">
+              <div className="w-full gap-2 ">
                 <input
                   type="text"
-                  id="search-field"
-                  className="px-2  py-1 border  border-gray-200/80"
-                  placeholder="Search book"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full py-2 px-2 border border-gray-200/80"
+                  placeholder="Search By Title, author or genre"
                 />
-                <Button variant="ghost">
-                  <HiOutlineSearch size="20" />
-                </Button>
               </div>
             </div>
           </div>
           <div>
-            <h1 className="text-xl uppercase">Availability Genre</h1>
-            <div className="flex flex-col">
+            <h1 className="text-xl ">Availability Genre</h1>
+            <div className="flex  flex-col">
               {Array.from(uniqueGenres).map((genre, key) => (
                 <Button key={key} variant="link" asChild>
                   <Link to={`/${genre as string}`}>
@@ -58,7 +70,7 @@ export default function Books() {
             </div>
           </div>
           <div>
-            <h1 className="text-xl my-4 uppercase">Publication Year</h1>
+            <h1 className="text-xl my-4 ">Publication Year</h1>
             <div className="grid grid-cols-4 gap-4 ">
               {Array.from(uniqueYear).map((publicationYear, key) => (
                 <Button
@@ -79,8 +91,8 @@ export default function Books() {
         </div>
 
         <div className="col-span-9 grid grid-cols-3 gap-10 pb-20">
-          {data !== undefined &&
-            data?.data.map((book: IBook) => <BookCard book={book} />)}
+          {bookData !== undefined &&
+            bookData.map((book: IBook) => <BookCard book={book} />)}
         </div>
       </div>
     </>
