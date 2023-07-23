@@ -3,10 +3,37 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { FiSend } from 'react-icons/fi';
+import { useForm } from 'react-hook-form';
+import { useAppSelector } from '@/redux/hooks';
+import { useAddReviewMutation } from '@/redux/features/book/bookApi';
+import { Link, useParams } from 'react-router-dom';
+import { toast } from './ui/use-toast';
+import PrivateRoute from '@/routes/PrivateRoute';
 interface IProps {
   review: IReview[];
 }
-export default function ProductReview({ review }: IProps) {
+const ProductReview = ({ review }: IProps) => {
+  const { id } = useParams();
+  const { users } = useAppSelector((state) => state.users);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const [addReview] = useAddReviewMutation();
+  const onSubmit = (value: any) => {
+    const payload = {
+      ...value,
+      _id: id,
+      reviewBy: users.email,
+    };
+    addReview(payload);
+    reset();
+    toast({
+      description: 'Review added successfully!',
+    });
+  };
   return (
     <div className="max-w-7xl mx-auto mt-5">
       <div className=" my-8">
@@ -14,12 +41,31 @@ export default function ProductReview({ review }: IProps) {
           Add Review{' '}
         </h1>
       </div>
-      <div className="flex gap-5 items-center">
-        <Textarea className="min-h-[30px]" />
-        <Button className="rounded-full h-10 w-10 p-2 text-[25px]">
-          <FiSend />
-        </Button>
-      </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex gap-5 items-center">
+          <Textarea
+            {...register('review', { required: true })}
+            className="min-h-[30px]"
+          />
+          {errors.review && (
+            <span className="float-right  text-red-500">
+              Review is required
+            </span>
+          )}
+
+          {users.email ? (
+            <Button className="rounded-full h-10 w-10 p-2 text-[25px]">
+              <FiSend />
+            </Button>
+          ) : (
+            <Link to="/login">
+              <Button className="rounded-full h-10 w-10 p-2 text-[25px]">
+                <FiSend />
+              </Button>
+            </Link>
+          )}
+        </div>
+      </form>
       <div className=" my-8">
         <h1 className="text-2xl font-semibold capitalize font-serif">
           Read Reviews{' '}
@@ -49,4 +95,5 @@ export default function ProductReview({ review }: IProps) {
       </div>
     </div>
   );
-}
+};
+export default ProductReview;

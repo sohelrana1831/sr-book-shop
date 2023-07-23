@@ -44,7 +44,7 @@ const bookApi = apiSlice.injectEndpoints({
     }),
     addReview: builder.mutation({
       query: (data) => ({
-        url: `/book/add-review`,
+        url: `/book/${data?._id}`,
         method: 'POST',
         body: data,
       }),
