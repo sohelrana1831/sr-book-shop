@@ -51,6 +51,11 @@ export default function Books() {
         field: 'searchTerm',
         value: searchItems.searchTerm,
       });
+    } else {
+      setQueryData({
+        field: 'searchTerm',
+        value: '',
+      });
     }
   }, [searchItems]);
 
@@ -71,10 +76,25 @@ export default function Books() {
       </div>
       <div className="grid grid-cols-12 max-w-7xl mx-auto relative ">
         <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16 h-[calc(100vh-80px)]">
-          <div className="">
-            <h1 className="my-2 text-sm font-bold capitalize">
-              Search By Title, author or genre
-            </h1>
+          <div className="flex flex-col">
+            <Button
+              className="cursor-pointer float-left my-2 bg-cyan-500 shadow-lg shadow-cyan-500/50 focus:ring-zinc-200 focus:ring-white-500 focus:bg-white"
+              variant="outline"
+              onClick={() =>
+                setSearchItems({
+                  searchTerm: '',
+                  genre: ``,
+                  publicationYear: '',
+                })
+              }
+            >
+              <h1>All Book</h1>
+            </Button>
+            <div className="">
+              <h1 className="my-2 text-sm font-bold capitalize">
+                Search By Title, author or genre
+              </h1>
+            </div>
             <div className="w-full gap-2 ">
               <input
                 type="text"
@@ -97,7 +117,7 @@ export default function Books() {
             <div className="flex  flex-col">
               {Array.from(uniqueGenres).map((genre, key) => (
                 <Button
-                  className="cursor-pointer float-left my-2 bg-cyan-500 shadow-lg shadow-cyan-500/50 focus:ring-2 focus:ring-white-500"
+                  className="cursor-pointer float-left my-2 bg-cyan-500 shadow-lg shadow-cyan-500/50 focus:ring-zinc-200 focus:ring-white-500 focus:bg-white"
                   variant="outline"
                   onClick={() =>
                     setSearchItems({
@@ -120,7 +140,7 @@ export default function Books() {
             <div className="grid grid-cols-4 gap-4 ">
               {Array.from(uniqueYear).map((publicationYear, key) => (
                 <Button
-                  className="bg-cyan-500 shadow-lg shadow-cyan-500/50 gap-4 cursor-pointer"
+                  className="cursor-pointer float-left my-2 bg-cyan-500 shadow-lg shadow-cyan-500/50 focus:ring-zinc-200 focus:ring-white-500 focus:bg-white"
                   key={key}
                   onClick={() =>
                     setSearchItems({
@@ -129,10 +149,9 @@ export default function Books() {
                       publicationYear: `${publicationYear}`,
                     })
                   }
-                  variant="link"
-                  asChild
+                  variant="outline"
                 >
-                  <Label htmlFor="in-stock">{publicationYear as string}</Label>
+                  <h1>{publicationYear as string}</h1>
                 </Button>
               ))}
             </div>

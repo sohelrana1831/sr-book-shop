@@ -33,7 +33,13 @@ export default function Navbar() {
           <div>
             <Button variant="link" asChild>
               <Link to="/">
-                <h1 className="text-4xl">SR Book Shop</h1>
+                <h1 className="text-4xl">
+                  SR{' '}
+                  <span className="text-cyan-500 font-mono font-bold">
+                    Book
+                  </span>{' '}
+                  Shop
+                </h1>
               </Link>
             </Button>
           </div>
