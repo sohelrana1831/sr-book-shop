@@ -6,6 +6,15 @@ export interface IBook {
   userEmail: string;
   publicationDate: Date | string;
   imageLink: string;
-  reviews?: string[];
+  reviews?: IProps;
   publicationYear?: string;
+}
+
+export interface IReview {
+  review: string;
+  reviewBy: string;
+}
+
+interface IProps {
+  review: IReview[];
 }

@@ -1,3 +1,4 @@
+import BookCard from '@/components/BookCard';
 import ProductReview from '@/components/ProductReview';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
@@ -6,7 +7,7 @@ import {
   useGetBooksQuery,
 } from '@/redux/features/book/bookApi';
 import { useAppSelector } from '@/redux/hooks';
-import { IBook } from '@/types/globalTypes';
+import { IBook, IReview } from '@/types/globalTypes';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -14,7 +15,7 @@ import { Link, useParams } from 'react-router-dom';
 export default function ProductDetails() {
   const [singleBook, setSingleBook] = useState<IBook>();
   const { id } = useParams();
-
+  const [bookData, setBookData] = useState<IBook[]>([]);
   const { data } = useGetBooksQuery(undefined);
   const { users } = useAppSelector((state) => state.users);
 
@@ -25,6 +26,15 @@ export default function ProductDetails() {
       );
     }
   }, [data, id]);
+
+  useEffect(() => {
+    if (data !== undefined) {
+      const filterData = data?.data?.filter(
+        (item: IBook) => item.userEmail === singleBook?.userEmail
+      );
+      setBookData(filterData);
+    }
+  }, [data, singleBook?.userEmail]);
 
   const [deleteBook] = useDeleteBookMutation();
 
@@ -73,7 +83,19 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
-      {singleBook?.reviews && <ProductReview review={singleBook?.reviews} />}
+      {singleBook?.reviews && (
+        <ProductReview review={singleBook?.reviews as unknown as []} />
+      )}
+      <hr className="max-w-7xl mx-auto mt-5" />
+      <div className="text-center my-8">
+        <h1 className="text-2xl font-semibold capitalize font-serif">
+          Frequently bought together
+        </h1>
+      </div>
+      <div className="col-span-9 grid grid-cols-3 gap-10 pb-20 w-full md:max-w-7xl h-full mx-auto ">
+        {bookData !== undefined &&
+          bookData.map((book: IBook) => <BookCard book={book} />)}
+      </div>
     </>
   );
 }

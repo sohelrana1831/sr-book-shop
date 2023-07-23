@@ -1,34 +1,39 @@
 import { IBook } from '@/types/globalTypes';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import { Button } from './ui/button';
 
 interface IProps {
   book: IBook;
 }
 
 export default function BookCard({ book }: IProps) {
-  // const handleAddProduct = (book: IBook) => {
-  //   toast({
-  //     description: 'Product Added',
-  //   });
-  // };
   return (
-    <div>
-      <div className="rounded-2xl h-[480px] flex flex-col items-start justify-between p-5 overflow-hidden shadow-md border border-gray-100 hover:shadow-2xl hover:scale-[102%] transition-all gap-2">
-        <div>
+    <>
+      <div className="h-60 bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="flex">
           <Link to={`/product-details/${book.id}`} className="w-full">
-            <img src={book?.imageLink} alt="book" />
-            <p className="text-lg">{book?.title}</p>
+            <img
+              className="object-cover h-48 w-full"
+              src={book?.imageLink}
+              alt="Book Cover"
+            />
+            {/* <Button className="my-4 ml-4">View</Button> */}
           </Link>
-        </div>
-        <div className="flex flex-col font-sans text-sm">
-          <div>Author: {book?.author}</div>
-          <div>Genre: {book?.genre}</div>
-          <div>
-            Publication: {format(new Date(book.publicationDate), 'yyyy-MM-dd')}
+
+          <div className="p-4 w-full">
+            <h2 className="text-2xl font-semibold text-gray-800">
+              {book?.title}
+            </h2>
+            <p className="text-sm text-gray-600 mb-4">Author: {book?.author}</p>
+            <p className="text-sm text-gray-600 mb-4">Genre: {book?.genre}</p>
+            <p className="text-sm text-gray-600">
+              Publication:{' '}
+              {format(new Date(book?.publicationDate), 'yyyy-MM-dd')}
+            </p>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

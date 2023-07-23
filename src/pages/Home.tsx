@@ -37,9 +37,9 @@ export default function Home() {
           Multi pure <span className="bg-blend-color-dodge">Books</span>
         </h1>
       </div>
-      <div className="col-span-9 grid grid-cols-4 gap-10 pb-20 w-full md:max-w-7xl h-full mx-auto ">
+      <div className="col-span-9 grid grid-cols-3 gap-10 pb-20 w-full md:max-w-7xl h-full mx-auto ">
         {data !== undefined &&
-          data.data.map((book: IBook) => <BookCard book={book} />)}
+          data.data.slice(0, 10).map((book: IBook) => <BookCard book={book} />)}
       </div>
       <Footer />
     </>
