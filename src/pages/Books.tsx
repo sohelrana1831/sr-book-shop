@@ -72,29 +72,33 @@ export default function Books() {
       <div className="grid grid-cols-12 max-w-7xl mx-auto relative ">
         <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16 h-[calc(100vh-80px)]">
           <div className="">
-            <div className="">
-              <div className="w-full gap-2 ">
-                <input
-                  type="text"
-                  onChange={(e) =>
-                    setSearchItems({
-                      searchTerm: e.target.value,
-                      genre: '',
-                      publicationYear: '',
-                    })
-                  }
-                  className="w-full py-2 px-2 border border-gray-200/80"
-                  placeholder="Search By Title, author or genre"
-                />
-              </div>
+            <h1 className="my-2 text-sm font-bold capitalize">
+              Search By Title, author or genre
+            </h1>
+            <div className="w-full gap-2 ">
+              <input
+                type="text"
+                onChange={(e) =>
+                  setSearchItems({
+                    searchTerm: e.target.value,
+                    genre: '',
+                    publicationYear: '',
+                  })
+                }
+                className="w-full py-2 px-2 border border-gray-200/80"
+                placeholder="Search By Title, author or genre"
+              />
             </div>
           </div>
           <div>
-            <h1 className="text-xl ">Availability Genre</h1>
+            <h1 className="my-2 text-sm font-bold capitalize">
+              Availability Genre
+            </h1>
             <div className="flex  flex-col">
               {Array.from(uniqueGenres).map((genre, key) => (
                 <Button
-                  className="cursor-pointer"
+                  className="cursor-pointer float-left my-2 bg-cyan-500 shadow-lg shadow-cyan-500/50 focus:ring-2 focus:ring-white-500"
+                  variant="outline"
                   onClick={() =>
                     setSearchItems({
                       searchTerm: '',
@@ -103,16 +107,16 @@ export default function Books() {
                     })
                   }
                   key={key}
-                  variant="link"
-                  asChild
                 >
-                  <Label htmlFor="in-stock">{genre as string}</Label>
+                  <h1>{genre as string}</h1>
                 </Button>
               ))}
             </div>
           </div>
           <div>
-            <h1 className="text-xl my-4 ">Publication Year</h1>
+            <h1 className="my-2 text-sm font-bold capitalize">
+              Publication Year
+            </h1>
             <div className="grid grid-cols-4 gap-4 ">
               {Array.from(uniqueYear).map((publicationYear, key) => (
                 <Button
