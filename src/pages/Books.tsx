@@ -8,9 +8,18 @@ import {
 import { IBook } from '@/types/globalTypes';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+type ISearchType = {
+  genre: string;
+  publicationYear: string;
+  searchTerm: string;
+};
 export default function Books() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [queryData, setQueryData] = useState({ value: '', field: '' });
+  const [searchItems, setSearchItems] = useState<ISearchType>({
+    genre: '',
+    publicationYear: '',
+    searchTerm: '',
+  });
   const [bookData, setBookData] = useState([]);
   const { data } = useGetBooksQuery(undefined);
 
@@ -26,7 +35,26 @@ export default function Books() {
       uniqueYear.add(book.publicationYear);
     });
 
-  const { data: searchData } = useGetSearchTermQuery(searchTerm);
+  useEffect(() => {
+    if (searchItems.genre) {
+      setQueryData({
+        field: 'genre',
+        value: searchItems.genre,
+      });
+    } else if (searchItems.publicationYear) {
+      setQueryData({
+        field: 'publicationYear',
+        value: searchItems.publicationYear,
+      });
+    } else if (searchItems.searchTerm) {
+      setQueryData({
+        field: 'searchTerm',
+        value: searchItems.searchTerm,
+      });
+    }
+  }, [searchItems]);
+
+  const { data: searchData } = useGetSearchTermQuery(queryData);
 
   useEffect(() => {
     if (searchData?.data?.length) {
@@ -48,8 +76,13 @@ export default function Books() {
               <div className="w-full gap-2 ">
                 <input
                   type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) =>
+                    setSearchItems({
+                      searchTerm: e.target.value,
+                      genre: '',
+                      publicationYear: '',
+                    })
+                  }
                   className="w-full py-2 px-2 border border-gray-200/80"
                   placeholder="Search By Title, author or genre"
                 />
@@ -60,10 +93,20 @@ export default function Books() {
             <h1 className="text-xl ">Availability Genre</h1>
             <div className="flex  flex-col">
               {Array.from(uniqueGenres).map((genre, key) => (
-                <Button key={key} variant="link" asChild>
-                  <Link to={`/${genre as string}`}>
-                    <Label htmlFor="in-stock">{genre as string}</Label>
-                  </Link>
+                <Button
+                  className="cursor-pointer"
+                  onClick={() =>
+                    setSearchItems({
+                      searchTerm: '',
+                      genre: `${genre}`,
+                      publicationYear: '',
+                    })
+                  }
+                  key={key}
+                  variant="link"
+                  asChild
+                >
+                  <Label htmlFor="in-stock">{genre as string}</Label>
                 </Button>
               ))}
             </div>
@@ -73,16 +116,19 @@ export default function Books() {
             <div className="grid grid-cols-4 gap-4 ">
               {Array.from(uniqueYear).map((publicationYear, key) => (
                 <Button
-                  className="bg-cyan-500 shadow-lg shadow-cyan-500/50 gap-4"
+                  className="bg-cyan-500 shadow-lg shadow-cyan-500/50 gap-4 cursor-pointer"
                   key={key}
+                  onClick={() =>
+                    setSearchItems({
+                      searchTerm: '',
+                      genre: '',
+                      publicationYear: `${publicationYear}`,
+                    })
+                  }
                   variant="link"
                   asChild
                 >
-                  <Link to={`/${publicationYear}`}>
-                    <Label htmlFor="in-stock">
-                      {publicationYear as string}
-                    </Label>
-                  </Link>
+                  <Label htmlFor="in-stock">{publicationYear as string}</Label>
                 </Button>
               ))}
             </div>
