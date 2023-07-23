@@ -21,7 +21,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data: ILogin) => {
-    // console.log(data);
     dispatch(loginUser({ email: data.email, password: data.password }));
   };
 

@@ -21,7 +21,6 @@ export default function Navbar() {
   const dispatch = useAppDispatch();
 
   const handelLogout = () => {
-    console.log('logout');
     signOut(auth).then(() => {
       // Sign-out successful.
       dispatch(setUser(null));

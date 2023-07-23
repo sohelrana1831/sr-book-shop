@@ -17,7 +17,6 @@ export default function Signup() {
   } = useForm<ISingup>();
   const dispatch = useAppDispatch();
   const onSubmit = async (data: ISingup) => {
-    console.log(data);
     if (data.reEnterPassword !== data.password) {
       setError('Passwords do not match');
     } else {

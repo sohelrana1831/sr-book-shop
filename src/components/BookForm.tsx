@@ -65,7 +65,6 @@ const BookForm = ({ mode }: IMode) => {
   }, [id, mode, setValue, singleBook]);
 
   const onSubmit = (value: BookFormInputs) => {
-    console.log(value);
     const dateObject = new Date(value.publicationDate);
     const year = dateObject.getFullYear();
     const payload = {
