@@ -1,4 +1,7 @@
+import { Button } from '@/components/ui/button';
+import { BiBookReader } from 'react-icons/bi';
 import { RiFacebookBoxFill, RiInstagramLine } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 export default function Footer() {
   const date = new Date();
   const year = date.getFullYear();
@@ -7,7 +10,18 @@ export default function Footer() {
     <div className="bg-[#242630] text-secondary p-20">
       <div className="flex justify-between">
         <div>
-          <h1 className="text-4xl">SR Book Shop</h1>
+          <Button variant="link" asChild>
+            <Link to="/">
+              <h1 className="text-2xl inline-flex text-white">
+                SR{' '}
+                <span className="text-cyan-500 flex flex-initial font-mono font-bold">
+                  {' '}
+                  B<BiBookReader />k{' '}
+                </span>{' '}
+                Shop
+              </h1>
+            </Link>
+          </Button>
           <p className="w-80 text-justify">
             This book describes how a detective tracks down a serial killer.
             Park Town is a renowned neighborhood in Berlin. In the city, the

@@ -55,7 +55,7 @@ export default function ProductDetails() {
         </div>
         <div className="w-[50%] space-y-3">
           <h1 className="text-3xl font-semibold">{singleBook?.title}</h1>
-          <div className="flex flex-col font-sans text-sm">
+          <div className="flex flex-col  text-lg font-serif">
             <div>Author: {singleBook?.author}</div>
             <div>Genre: {singleBook?.genre}</div>
             <div>
@@ -65,7 +65,12 @@ export default function ProductDetails() {
             </div>
           </div>
           <div className="flex gap-2">
-            <Button>Download</Button>
+            <Button
+              variant={'outline'}
+              className="cursor-pointer float-left  bg-cyan-500 shadow-lg shadow-cyan-500/50 focus:ring-zinc-200 focus:ring-white-500 focus:bg-white"
+            >
+              Download
+            </Button>
             {singleBook?.userEmail === users.email && (
               <>
                 <Button variant={'secondary'}>

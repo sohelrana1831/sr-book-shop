@@ -9,6 +9,7 @@ import {
   DropdownMenuContent,
 } from '../components/ui/dropdown-menu';
 import { HiOutlineSearch } from 'react-icons/hi';
+import { BiBookReader } from 'react-icons/bi';
 import { FaUserLock, FaUserTie } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { signOut } from 'firebase/auth';
@@ -33,10 +34,11 @@ export default function Navbar() {
           <div>
             <Button variant="link" asChild>
               <Link to="/">
-                <h1 className="text-4xl">
+                <h1 className="text-2xl inline-flex">
                   SR{' '}
-                  <span className="text-cyan-500 font-mono font-bold">
-                    Book
+                  <span className="text-cyan-500 flex flex-initial font-mono font-bold">
+                    {' '}
+                    B<BiBookReader />k{' '}
                   </span>{' '}
                   Shop
                 </h1>
@@ -74,7 +76,7 @@ export default function Navbar() {
                     {!users.email ? (
                       <FaUserLock className="text-3xl" />
                     ) : (
-                      <FaUserTie className="text-3xl" />
+                      <FaUserTie className="text-3xl  text-cyan-500" />
                     )}
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>

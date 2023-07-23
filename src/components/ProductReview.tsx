@@ -54,7 +54,10 @@ const ProductReview = ({ review }: IProps) => {
           )}
 
           {users.email ? (
-            <Button className="rounded-full h-10 w-10 p-2 text-[25px]">
+            <Button
+              variant={'outline'}
+              className="rounded-full h-10 w-10 p-2 text-[25px]  bg-cyan-500 shadow-lg shadow-cyan-500/50 focus:ring-zinc-200 focus:ring-white-500 focus:bg-white"
+            >
               <FiSend />
             </Button>
           ) : (

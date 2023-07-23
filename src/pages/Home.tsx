@@ -26,14 +26,19 @@ export default function Home() {
               centuries, the definition has...
             </p>
           </div>
-          <Button className="mt-5">Learn more</Button>
+          <Button
+            variant={'outline'}
+            className="cursor-pointer float-left my-2 bg-cyan-500 shadow-lg shadow-cyan-500/50 focus:ring-zinc-200 focus:ring-white-500 focus:bg-white"
+          >
+            Learn more
+          </Button>
         </div>
         <div className="relative -right-14">
           <img src={hero} alt="" />
         </div>
       </div>
       <div className="text-center my-8">
-        <h1 className="text-5xl">
+        <h1 className="text-5xl font-thin">
           Multi pure <span className="bg-blend-color-dodge">Books</span>
         </h1>
       </div>
