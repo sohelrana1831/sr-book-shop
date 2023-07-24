@@ -73,7 +73,7 @@ export default function Books() {
         </h1>
       </div>
       <div className="grid grid-cols-12 max-w-7xl mx-auto relative ">
-        <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16 h-[calc(100vh-80px)]">
+        <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16">
           <div className="flex flex-col">
             <Button
               className="cursor-pointer float-left my-2 bg-cyan-500 shadow-lg shadow-cyan-500/50 focus:ring-zinc-200 focus:ring-white-500 focus:bg-white"

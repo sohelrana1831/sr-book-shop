@@ -51,7 +51,7 @@ export default function ProductDetails() {
     <>
       <div className="flex my-8 max-w-7xl mx-auto items-center">
         <div className="w-[50%]">
-          <img src={singleBook?.imageLink} alt="" />
+          <img className="w-1/3" src={singleBook?.imageLink} alt="" />
         </div>
         <div className="w-[50%] space-y-3">
           <h1 className="text-3xl font-semibold">{singleBook?.title}</h1>
