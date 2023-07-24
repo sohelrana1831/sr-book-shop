@@ -8,7 +8,6 @@ import { useAppSelector } from '@/redux/hooks';
 import { useAddReviewMutation } from '@/redux/features/book/bookApi';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from './ui/use-toast';
-import PrivateRoute from '@/routes/PrivateRoute';
 interface IProps {
   review: IReview[];
 }

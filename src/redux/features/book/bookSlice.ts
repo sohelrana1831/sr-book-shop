@@ -1,6 +1,5 @@
 import { IBook } from '@/types/globalTypes';
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { useAddBookMutation } from './bookApi';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface IState {
   book: IBook[];

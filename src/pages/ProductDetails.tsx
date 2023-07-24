@@ -7,7 +7,7 @@ import {
   useGetBooksQuery,
 } from '@/redux/features/book/bookApi';
 import { useAppSelector } from '@/redux/hooks';
-import { IBook, IReview } from '@/types/globalTypes';
+import { IBook } from '@/types/globalTypes';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
