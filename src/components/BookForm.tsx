@@ -43,6 +43,7 @@ const BookForm = ({ mode }: IMode) => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<BookFormInputs>();
 
   const { users } = useAppSelector((state) => state.users);
@@ -80,6 +81,7 @@ const BookForm = ({ mode }: IMode) => {
           ? 'Book edited successfully!'
           : 'Book added successfully!',
     });
+    reset();
   };
   return (
     <>

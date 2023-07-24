@@ -43,8 +43,13 @@ export default function Home() {
         </h1>
       </div>
       <div className="col-span-9 grid grid-cols-3 gap-10 pb-20 w-full md:max-w-7xl h-full mx-auto ">
-        {data !== undefined &&
-          data.data.slice(0, 10).map((book: IBook) => <BookCard book={book} />)}
+        {data !== undefined ? (
+          data.data.slice(0, 10).map((book: IBook) => <BookCard book={book} />)
+        ) : (
+          <div className="flex items-center justify-center mx-auto">
+            <div className="w-40 h-40 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
+          </div>
+        )}
       </div>
       <Footer />
     </>

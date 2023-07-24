@@ -157,8 +157,13 @@ export default function Books() {
         </div>
 
         <div className="col-span-9 grid grid-cols-3 gap-10 pb-20">
-          {bookData !== undefined &&
-            bookData.map((book: IBook) => <BookCard book={book} />)}
+          {bookData.length ? (
+            bookData.map((book: IBook) => <BookCard book={book} />)
+          ) : (
+            <div className="flex items-center justify-center mx-auto">
+              <div className="w-40 h-40 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
+            </div>
+          )}
         </div>
       </div>
     </>

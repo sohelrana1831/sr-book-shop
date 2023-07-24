@@ -68,6 +68,7 @@ export const usersSlice = createSlice({
       .addCase(createUser.rejected, (state, action) => {
         (state.users.email = null),
           (state.isError = false),
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           (state.error = action.error.message!);
       })
       .addCase(loginUser.pending, (state) => {
@@ -79,11 +80,27 @@ export const usersSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         (state.users.email = null),
           (state.isError = false),
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           (state.error = action.error.message!);
       });
   },
 });
 
 export const { setUser, setLodging } = usersSlice.actions;
+
+// Add an observer to handle token expiration and refresh
+export const startTokenRefreshObserver =
+  () =>
+  (
+    dispatch: (arg0: { payload: string | null; type: 'user/setUser' }) => void
+  ) => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        dispatch(setUser(user.email));
+      } else {
+        dispatch(setUser(null));
+      }
+    });
+  };
 
 export default usersSlice.reducer;
